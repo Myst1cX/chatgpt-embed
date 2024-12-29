@@ -22,7 +22,8 @@
 <body>
 
     <h2>ChatGPT Dictionary Embed</h2>
-    <iframe id="chatgptIframe" src="https://chat.openai.com/chat?prompt=Give+me+the+full+definitions+of+%22<word>%22%3Clanguage%3E%2C+if+possible+try+to+include+IPA%2C+definitions+each+with+at+least+two+examples%2C+etymology%2C+conjugations%2C+related+words+with+explanations+etc.&context=<sentence>" 
+    <iframe id="chatgptIframe" 
+            src="https://winter-butterfly-bb33.topolakfiliplars.workers.dev/chatgpt?prompt=Give+me+the+full+definitions+of+%22<word>%22%3Clanguage%3E%2C+if+possible+try+to+include+IPA%2C+definitions+each+with+at+least+two+examples%2C+etymology%2C+conjugations%2C+related+words+with+explanations+etc.&context=<sentence>" 
             frameborder="0" scrolling="yes"></iframe>
 
     <script>
@@ -32,9 +33,15 @@
         const sentence = params.get('sentence') || '';
 
         const iframe = document.getElementById('chatgptIframe');
-        const prompt = `Give me the full definitions of "${word}"<language>, if possible try to include IPA, definitions each with at least two examples, etymology, conjugations, related words with explanations etc.`;
-
-        iframe.src = `https://chat.openai.com/chat?prompt=${encodeURIComponent(prompt)}&context=${encodeURIComponent(sentence)}`;
+        
+        // Make sure we have a valid word parameter before setting the iframe source
+        if (word) {
+            const prompt = `Give me the full definitions of "${word}"<language>, if possible try to include IPA, definitions each with at least two examples, etymology, conjugations, related words with explanations etc.`;
+            const iframeSrc = `https://winter-butterfly-bb33.topolakfiliplars.workers.dev/chatgpt?prompt=${encodeURIComponent(prompt)}&context=${encodeURIComponent(sentence)}`;
+            iframe.src = iframeSrc;
+        } else {
+            console.error('Word parameter is missing in the URL.');
+        }
     </script>
 
 </body>
